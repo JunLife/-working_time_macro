@@ -79,8 +79,8 @@ def job():
     print('request status:', request.status_code)
 
 if __name__ == '__main__':
-    at_time: Final = '09:00'
     take_off_status: Final = ['연차 - 종일', '휴무']
+    at_time: Final = '09:00'
 
     next_line: Final = '\n'
     today_message: Final = '========== 오늘 출근시간 =========='
@@ -94,7 +94,6 @@ if __name__ == '__main__':
 
     load_dotenv(verbose = True)
 
-    job()
     while True:
         schedule.run_pending()
         time.sleep(1)
