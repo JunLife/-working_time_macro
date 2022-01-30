@@ -14,7 +14,7 @@ def is_take_off(status):
     return False
 
 def get_today():
-    return datetime.now().date()
+    return datetime.now().date() - timedelta(days=3)
 
 def get_response(today):
     response = requests.get(
@@ -24,6 +24,7 @@ def get_response(today):
          'Accept': 'application/json, text/plain, */*'
         }
     )
+    print(response)
     return response.json()['rows']
 
 def send_message(message):
@@ -53,14 +54,12 @@ def get_yesterday_message(response):
 
 def get_today_message(response):
     result = ''
-    print(response[0])
     for i in range(len(response)):
         result += f'{response[i]["uname"]}: {response[i]["data"][0]["status_name"]} '
 
         if is_take_off(response[i]["data"][0]["status_name"]):
             result += next_line
             continue
-        print()
         result += f'{response[i]["data"][0]["time"]}{next_line}' 
 
     return result
@@ -93,7 +92,7 @@ if __name__ == '__main__':
     schedule.every().friday.at(at_time).do(job)
 
     load_dotenv(verbose = True)
-
+    job()
     while True:
         schedule.run_pending()
         time.sleep(1)
