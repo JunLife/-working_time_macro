@@ -17,14 +17,13 @@ def get_today():
     return datetime.now().date() - timedelta(days=3)
 
 def get_response(today):
-    response = requests.get(
+    response = requests. get(
         f'http://xdn.hanbiro.net/ngw/timecard/org/status/?status=&start_date={today}&group_no=&user_no=&page=1',
         headers={
          'Cookie': os.getenv('GROUPWARE_COOKIE'),
          'Accept': 'application/json, text/plain, */*'
         }
     )
-    print(response)
     return response.json()['rows']
 
 def send_message(message):
